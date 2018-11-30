@@ -70,10 +70,10 @@ namespace PoohAPI.Logic.Vacancies.Services
         {
             Dictionary<string, object> parameters = new Dictionary<string, object>
             {
-                { "@vanacyid", vacancyid }
+                { "@vacancyid", vacancyid }
             };
 
-            string query = @"UPDATE FROM reg_vacatures
+            string query = @"UPDATE reg_vacatures
                              SET vacature_keer_bekeken = vacature_keer_bekeken + 1
                              WHERE vacature_id = @vacancyid";
 

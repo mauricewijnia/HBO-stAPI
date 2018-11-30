@@ -87,5 +87,30 @@ namespace PoohAPI.Controllers
                 return NotFound("vacancy not found.");
             }
         }
+
+        /// <summary>
+        /// Increments the TimesSeen of a Vacancy
+        /// </summary>
+        /// <param name="id">The Id of the vacancy to increment</param>
+        /// <returns>One specific vacancy</returns>
+        /// <response code="200">Returns the requested vacancy</response>
+        /// <response code="404">If the specified vacancy was not found</response>   
+        [HttpPost("{id}/seen")]
+        [ProducesResponseType(typeof(Vacancy), 200)]
+        [ProducesResponseType(404)]
+        public IActionResult IncrementTimesSeen(int id)
+        {
+            Vacancy vacancy = this.vacancyReadService.GetVacancyById(id);
+
+            if (vacancy != null)
+            {
+                this.vacancyCommandService.IncrementTimesSeen(vacancy.Id);
+                return Ok(vacancy);
+            }
+            else
+            {
+                return NotFound("vacancy not found.");
+            }
+        }
     }
 }

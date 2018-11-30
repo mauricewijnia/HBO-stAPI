@@ -10,5 +10,6 @@ namespace PoohAPI.Logic.Common.Interfaces
     {
         void AddFavourite(int userid, int vacancyid);
         void DeleteFavourite(int userid, int vacancyid);
+        void IncrementTimesSeen(int vacancyid);
     }
 }

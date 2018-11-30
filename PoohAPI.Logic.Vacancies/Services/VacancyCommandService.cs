@@ -61,5 +61,23 @@ namespace PoohAPI.Logic.Vacancies.Services
 
             vacancyRepository.DeleteFavouriteVacanacy(query, parameters);
         }
+
+        /// <summary>
+        /// Incrementing the TimesSeen of a vacancy
+        /// </summary>
+        /// <param name="vacancyid">id of the vacancy to increment</param>
+        public void IncrementTimesSeen(int vacancyid)
+        {
+            Dictionary<string, object> parameters = new Dictionary<string, object>
+            {
+                { "@vanacyid", vacancyid }
+            };
+
+            string query = @"UPDATE FROM reg_vacatures
+                             SET vacature_keer_bekeken = vacature_keer_bekeken + 1
+                             WHERE vacature_id = @vacancyid";
+
+            vacancyRepository.IncrementTimesSeen(query, parameters);
+        }
     }
 }

@@ -52,5 +52,10 @@ namespace PoohAPI.Infrastructure.VacancyDB.Repositories
         {
             return GetSingle<DBVacancy>(query, parameters);
         }
+
+        public void IncrementTimesSeen(string query, Dictionary<string, object> parameters)
+        {
+            NonQuery(query, parameters);
+        }
     }
 }

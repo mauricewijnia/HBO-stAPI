@@ -124,6 +124,7 @@ vacancy_schema = {
                     'educationalAttainment' : {'type' : 'string'},
                     'internshipType' : {'type' : 'string'},
                     'location' : {'type' : 'dict', 'schema' : location_schema},
+                    'timesSeen' : {'type' : 'integer'}
                     }
 
 country_schema = {

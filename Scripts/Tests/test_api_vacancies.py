@@ -132,6 +132,21 @@ def test_location_range():
 
             assert correct == True
 
+def test_times_seen():
+    timesSeen = 1
+    vacancies_request = requests.get(base_url+vacancies_path+"?timesSeen=" + str(timesSeen))
+    f_test_status_code_200(vacancies_request)
+    vacancies = vacancies_request.json()
+
+    if len(vacancies) > 0:
+        for i in range(0, len(vacancies)):
+            vacancy = vacancies[i]
+            correct = True
+            if vacancy["timesSeen"] < timesSeen:
+                correct = False
+
+            assert correct == True
+
 
 def f_test_status_code_200(request):
     assert request.status_code == 200

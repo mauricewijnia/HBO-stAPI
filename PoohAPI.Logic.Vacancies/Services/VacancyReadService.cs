@@ -31,7 +31,7 @@ namespace PoohAPI.Logic.Vacancies.Services
             this.locationHelper = new LocationHelper();
         }
 
-        public IEnumerable<Vacancy> GetListVacancies(int maxcount = 5, int offset = 0, string additionallocationsearchterms = null, int? educationid = null, int? educationalattainmentid = null, IntershipType? internshiptype = null, int? languageid = null, string cityname = null, string countryname = null, int? locationrange = null)
+        public IEnumerable<Vacancy> GetListVacancies(int maxcount = 5, int offset = 0, string additionallocationsearchterms = null, int? educationid = null, int? educationalattainmentid = null, IntershipType? internshiptype = null, int? languageid = null, string cityname = null, string countryname = null, int? locationrange = null, int? timesSeen = null)
         {
             Dictionary<string, object> parameters = new Dictionary<string, object>();
 
@@ -49,6 +49,9 @@ namespace PoohAPI.Logic.Vacancies.Services
 
             //Adding language filter to the query
             this.AddLanguageFilter(parameters, languageid);
+
+            //Adding times seen filter to the query
+            this.AddTimesSeenFilter(parameters, timesSeen);
 
             //building the query
             string query = this.queryBuilder.BuildQuery();
@@ -202,6 +205,15 @@ namespace PoohAPI.Logic.Vacancies.Services
             {
                 this.queryBuilder.AddWhere("t.talen_id = @languageid");
                 parameters.Add("@languageid", languageid);
+            }
+        }
+
+        private void AddTimesSeenFilter(Dictionary<string, object> parameters, int? timesSeen = null)
+        {
+            if(timesSeen != null)
+            {
+                this.queryBuilder.AddWhere("v.vacature_keer_bekeken >= @timesSeen");
+                parameters.Add("@timesSeen", timesSeen);
             }
         }
     }

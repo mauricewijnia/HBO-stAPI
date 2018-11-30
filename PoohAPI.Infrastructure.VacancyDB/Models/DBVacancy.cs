@@ -33,5 +33,6 @@ namespace PoohAPI.Infrastructure.VacancyDB.Models
         public string land_naam { get; set; }
         public double distance { get; set; }
         public string stagesoort { get; set; }
+        public string keer_bekeken { get; set; }
     }
 }

@@ -42,6 +42,7 @@ namespace PoohAPI.Logic.Vacancies.Init
                 .ForMember(d => d.Education, o => o.MapFrom(s => s.opleidingen))
                 .ForMember(d => d.Location, o => o.MapFrom(s => s))
                 .ForMember(d => d.InternshipType, o => o.MapFrom(s => s.stagesoort))
+                .ForMember(d => d.TimesSeen, o => o.MapFrom(s => s.keer_bekeken))
                 .ReverseMap();
 
             CreateMap<IDataReader, DBVacancy>().ConvertUsing<DataReaderTypeConverter<DBVacancy>>();

@@ -35,6 +35,7 @@ namespace PoohAPI.Controllers
         /// <param name="countryName">The coutry name where the vacancy is located in</param>
         /// <param name="locationRange">The range where the vacancies must be retrieved within</param>
         /// <param name="timesSeen">The minimum amount of times a vacancy must have been seen</param>
+        /// <param name="title">The characters which the title of the vacancy should contain.</param>
         /// <returns>A list of all vacancies</returns>
         /// <response code="200">Returns the list of vacancies</response>
         /// <response code="404">If no vacancies are found</response>   

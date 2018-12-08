@@ -39,6 +39,8 @@ namespace PoohAPI.Controllers
         /// <param name="additionalLocationSearchTerms">Additional search terms (municipality/province/state) if there are multiple cities with the same name in the same country. Separate terms by spaces. (LocationRange is required for this filter to work.)</param>
         /// <param name="major">The major which the returning companies should be suitable for</param>
         /// <param name="detailedCompanies">The type of model to return, false = BaseCompany, true = Company. Set to true to retrieve more details.</param>
+        /// <param name="name">The characters which the name of the company should contain.</param>
+
         /// <returns>A list of all basicCompanies</returns>
         /// <response code="200">Returns the list of basicCompanies</response>
         /// <response code="400">If the request was invalid</response>

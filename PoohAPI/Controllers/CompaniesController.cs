@@ -39,6 +39,8 @@ namespace PoohAPI.Controllers
         /// <param name="additionalLocationSearchTerms">Additional search terms (municipality/province/state) if there are multiple cities with the same name in the same country. Separate terms by spaces. (LocationRange is required for this filter to work.)</param>
         /// <param name="major">The major which the returning companies should be suitable for</param>
         /// <param name="detailedCompanies">The type of model to return, false = BaseCompany, true = Company. Set to true to retrieve more details.</param>
+        /// <param name="name">The characters which the name of the company should contain.</param>
+
         /// <returns>A list of all basicCompanies</returns>
         /// <response code="200">Returns the list of basicCompanies</response>
         /// <response code="400">If the request was invalid</response>
@@ -49,7 +51,7 @@ namespace PoohAPI.Controllers
         [ProducesResponseType(404)]
         public IActionResult GetAll([FromQuery]int maxCount = 5, [FromQuery]int offset = 0, [FromQuery]double? minStars = null,
             [FromQuery]double? maxStars = null, [FromQuery]string cityName = null, [FromQuery]string countryName = null,
-            [FromQuery]int? locationRange = null, [FromQuery]string additionalLocationSearchTerms = null, [FromQuery]int? major = null, [FromQuery]bool detailedCompanies = false )
+            [FromQuery]int? locationRange = null, [FromQuery]string additionalLocationSearchTerms = null, [FromQuery]int? major = null, [FromQuery]bool detailedCompanies = false , [FromQuery]string name = null)
         {
             if (maxCount < 1 || maxCount > 100)
                 return BadRequest("MaxCount should be between 1 and 100");
@@ -59,7 +61,7 @@ namespace PoohAPI.Controllers
                 return BadRequest("Number of stars should be between 1 and 5");
 
             IEnumerable<BaseCompany> companies = this.companyReadService.GetListCompanies(maxCount, offset, minStars, maxStars,
-                cityName, countryName, locationRange, additionalLocationSearchTerms, major, detailedCompanies);
+                cityName, countryName, locationRange, additionalLocationSearchTerms, major, detailedCompanies, name);
 
             if (companies is null)
                 return NotFound("No companies were found");

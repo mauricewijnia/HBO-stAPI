@@ -80,11 +80,12 @@ namespace PoohAPI.Logic.Companies.Services
         /// <returns></returns>
         public IEnumerable<BaseCompany> GetListCompanies(int maxCount, int offset, double? minStars = null,
             double? maxStars = null, string cityName = null, string countryName = null, int? locationRange = null,
-            string additionalLocationSearchTerms = null, int? major = null, bool detailedCompanies = false)
+            string additionalLocationSearchTerms = null, int? major = null, bool detailedCompanies = false, string name = null)
         {
             Dictionary<string, object> parameters = new Dictionary<string, object>();
             
             this.AddCompanyBaseQuery(parameters, maxCount, offset);
+            this.AddNameFilter(parameters, name);
             this.AddStarFilter(parameters, minStars, maxStars);
             this.AddLocationFilter(parameters, countryName, additionalLocationSearchTerms, cityName, locationRange);
             this.AddMajorFilter(parameters, major);
@@ -100,6 +101,16 @@ namespace PoohAPI.Logic.Companies.Services
                 return this.mapper.Map<IEnumerable<Company>>(dbCompanies);
             else
                 return this.mapper.Map<IEnumerable<BaseCompany>>(dbCompanies);
+        }
+
+        private void AddNameFilter(Dictionary<String, object> parameters, string name)
+        {
+            if (name != null)
+            {
+                name = String.Format("%{0}%", name);
+                this.queryBuilder.AddWhere("bedrijf_handelsnaam LIKE @name");
+                parameters.Add("@name", name);
+            }
         }
 
         private void AddMajorFilter(Dictionary<string, object> parameters, int? major)

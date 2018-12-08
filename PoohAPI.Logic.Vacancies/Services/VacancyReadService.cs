@@ -31,7 +31,7 @@ namespace PoohAPI.Logic.Vacancies.Services
             this.locationHelper = new LocationHelper();
         }
 
-        public IEnumerable<Vacancy> GetListVacancies(int maxcount = 5, int offset = 0, string additionallocationsearchterms = null, int? educationid = null, int? educationalattainmentid = null, IntershipType? internshiptype = null, int? languageid = null, string cityname = null, string countryname = null, int? locationrange = null, int? timesSeen = null)
+        public IEnumerable<Vacancy> GetListVacancies(int maxcount = 5, int offset = 0, string additionallocationsearchterms = null, int? educationid = null, int? educationalattainmentid = null, IntershipType? internshiptype = null, int? languageid = null, string cityname = null, string countryname = null, int? locationrange = null, int? timesSeen = null, string title = null)
         {
             Dictionary<string, object> parameters = new Dictionary<string, object>();
 
@@ -52,6 +52,8 @@ namespace PoohAPI.Logic.Vacancies.Services
 
             //Adding times seen filter to the query
             this.AddTimesSeenFilter(parameters, timesSeen);
+
+            this.AddTitleFilter(parameters, title);
 
             //building the query
             string query = this.queryBuilder.BuildQuery();
@@ -155,6 +157,16 @@ namespace PoohAPI.Logic.Vacancies.Services
 
             //Group by vacancyid needed for group concat to work
             this.queryBuilder.AddGroupBy("v.vacature_id");
+        }
+
+        private void AddTitleFilter(Dictionary<String, object> parameters, string title)
+        {
+            if (title != null)
+            {
+                title = String.Format("%{0}%", title);
+                this.queryBuilder.AddWhere("vacature_titel LIKE @title");
+                parameters.Add("@title", title);
+            }
         }
 
         private void AddLimitAndOffset(Dictionary<string, object> parameters, int maxCount, int offset)

@@ -42,7 +42,7 @@ namespace PoohAPI.Controllers
         [HttpGet]
         [ProducesResponseType(typeof(IEnumerable<Vacancy>), 200)]
         [ProducesResponseType(404)]
-        public IActionResult GetAll([FromQuery]int maxCount = 5, [FromQuery]int offset = 0, [FromQuery]string additionalLocationSearchTerms = null, [FromQuery]int? educationId = null, [FromQuery]int? educationalAttainmentId = null, [FromQuery]IntershipType? internshipType = null, [FromQuery]int? languageId = null, [FromQuery]string cityName = null, [FromQuery]string countryName = null, [FromQuery]int? locationRange = null, [FromQuery]int? timesSeen = null, string title = null)
+        public IActionResult GetAll([FromQuery]int maxCount = 5, [FromQuery]int offset = 0, [FromQuery]string additionalLocationSearchTerms = null, [FromQuery]int? educationId = null, [FromQuery]int? educationalAttainmentId = null, [FromQuery]IntershipType? internshipType = null, [FromQuery]int? languageId = null, [FromQuery]string cityName = null, [FromQuery]string countryName = null, [FromQuery]int? locationRange = null, [FromQuery]int? timesSeen = null,[FromQuery] string title = null)
         {
             if (maxCount < 0 || maxCount > 100)
             {

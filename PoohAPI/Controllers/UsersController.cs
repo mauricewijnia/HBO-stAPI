@@ -599,7 +599,7 @@ namespace PoohAPI.Controllers
             var allowedEmails = this.optionReadService.GetAllAllowedEmailAddresses(0, 0)
                 .Select(x => x.EmailAddress);
             var domain = emailAddress.Substring(emailAddress.LastIndexOf("@") + 1);
-            return allowedEmails.Any(address => address.Contains(domain));
+            return allowedEmails.Any(address => address == domain);
         }
     }
 }

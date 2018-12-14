@@ -41,15 +41,17 @@ namespace PoohAPI.Logic.Reviews.Services
             return this._mapper.Map<Review>(dbReview);            
         }
         
-        public IEnumerable<int> GetListReviewIdsForUser(int userId)
+        public IEnumerable<ReviewPublic> GetListReviewIdsForUser(int userId)
         {
             Dictionary<string, object> parameters = new Dictionary<string, object>();
 
             parameters.Add("@id", userId);
 
-            string query = "SELECT review_id FROM reg_reviews WHERE review_student_id = @id";
+            string query = "SELECT review_id, review_bedrijf_id, review_sterren, review_geschreven FROM reg_reviews WHERE review_student_id = @id";
 
-            return this._mapper.Map<IEnumerable<int>>(_reviewRepository.GetListReviewIds(query, parameters));
+            var dbReviews = _reviewRepository.GetListReviews(query, parameters);
+
+            return _mapper.Map<IEnumerable<ReviewPublic>>(dbReviews);
         }
 
         public IEnumerable<ReviewPublic> GetListReviewsForCompany(int companyId)

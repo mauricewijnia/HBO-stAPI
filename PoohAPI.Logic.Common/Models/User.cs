@@ -17,7 +17,7 @@ namespace PoohAPI.Logic.Common.Models
         public string Major { get; set; }
         public BaseLocation Location { get; set; }
         public IEnumerable<int> FavoriteVacancies { get; set; }
-        public IEnumerable<int> Reviews { get; set; }
+        public IEnumerable<ReviewPublic> Reviews { get; set; }
         public int PreferredLanguageId { get; set; }
         public string PreferredLanguage { get; set; }
     }

@@ -47,7 +47,7 @@ namespace PoohAPI.Logic.Reviews.Services
 
             parameters.Add("@id", userId);
 
-            string query = "SELECT review_id, review_bedrijf_id, review_sterren, review_geschreven FROM reg_reviews WHERE review_student_id = @id";
+            string query = "SELECT r.*, u.user_name AS review_student_name FROM reg_reviews r LEFT JOIN reg_users u ON r.review_student_id = u.user_id WHERE review_student_id = @id";
 
             var dbReviews = _reviewRepository.GetListReviews(query, parameters);
 

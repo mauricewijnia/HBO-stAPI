@@ -12,6 +12,6 @@ namespace PoohAPI.Logic.Common.Interfaces
         Review UpdateReview(int reviewId, int companyId, int userId, int stars, string writtenReview, int anonymous,
         DateTime creationDate, int verifiedReview, int verifiedBy);
         void DeleteReview(int id);
-        Review PostReview(int companyId, int userId, int stars, string writtenReview, int anonymous);
+        ReviewPublic PostReview(int companyId, int userId, int stars, string writtenReview, int anonymous);
     }
 }

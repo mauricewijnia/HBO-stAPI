@@ -59,7 +59,7 @@ namespace PoohAPI.Logic.Reviews.Services
             return _reviewReadService.GetReviewById(reviewId);
         }
 
-        public Review PostReview(int companyId, int userId, int stars, string writtenReview, int anonymous)
+        public ReviewPublic PostReview(int companyId, int userId, int stars, string writtenReview, int anonymous)
         { 
             Dictionary<string, object> parameters = new Dictionary<string, object>();
 
@@ -80,7 +80,7 @@ namespace PoohAPI.Logic.Reviews.Services
 
             var createdReviewId = _reviewRepository.PostReview(query, parameters);
 
-            return _reviewReadService.GetReviewById(createdReviewId);
+            return _reviewReadService.GetDetailedReviewById(createdReviewId);
         }
     }
 }

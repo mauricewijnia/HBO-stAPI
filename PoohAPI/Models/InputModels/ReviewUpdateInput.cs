@@ -16,7 +16,7 @@ namespace PoohAPI.Models.InputModels
         [Required]
         public string WrittenReview { get; set; }
         [Required]
-        public int Anonymous { get; set; }
+        public bool Anonymous { get; set; }
         [Required]
         public DateTime CreationDate { get; set; }
         [Required]

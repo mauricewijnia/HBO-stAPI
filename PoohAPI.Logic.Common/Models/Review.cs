@@ -14,7 +14,7 @@ namespace PoohAPI.Logic.Common.Models
         public int UserId { get; set; }
         public int Stars { get; set; }
         public string WrittenReview { get; set; }
-        public int Anonymous { get; set; }
+        public bool Anonymous { get; set; }
         public DateTime CreationDate { get; set; }
         public int VerifiedReview { get; set; }
         public int VerifiedBy { get; set; }

@@ -33,16 +33,25 @@ namespace PoohAPI.Logic.Reviews.Services
             _reviewRepository.DeleteReview(query, parameters);
         }
 
-        public Review UpdateReview(int reviewId, int companyId, int userId, int stars, string writtenReview, int anonymous, DateTime creationDate, int verifiedReview, int verifiedBy)
+        public Review UpdateReview(int reviewId, int companyId, int userId, int stars, string writtenReview, bool anonymous, DateTime creationDate, int verifiedReview, int verifiedBy)
         {
             Dictionary<string, object> parameters = new Dictionary<string, object>();
+            int anonymousValue;
+
+            if (anonymous)
+            {
+                anonymousValue = 1;
+            } else
+            {
+                anonymousValue = 0;
+            }
 
             parameters.Add("@id", reviewId);
             parameters.Add("@companyId", companyId);
             parameters.Add("@userId", userId);
             parameters.Add("@stars", stars);
             parameters.Add("@writtenReview", writtenReview);
-            parameters.Add("@anonymous", anonymous);
+            parameters.Add("@anonymous", anonymousValue);
             parameters.Add("@creationDate", creationDate);
             parameters.Add("@verifiedReview", verifiedReview);
             parameters.Add("@verifiedBy", verifiedBy);
@@ -59,15 +68,25 @@ namespace PoohAPI.Logic.Reviews.Services
             return _reviewReadService.GetReviewById(reviewId);
         }
 
-        public ReviewPublic PostReview(int companyId, int userId, int stars, string writtenReview, int anonymous)
+        public ReviewPublic PostReview(int companyId, int userId, int stars, string writtenReview, bool anonymous)
         { 
             Dictionary<string, object> parameters = new Dictionary<string, object>();
+            int anonymousValue;
+
+            if (anonymous)
+            {
+                anonymousValue = 1;
+            }
+            else
+            {
+                anonymousValue = 0;
+            }
 
             parameters.Add("@bedrijfId", companyId);
             parameters.Add("@studentId", userId);
             parameters.Add("@sterren", stars);
             parameters.Add("@geschreven", writtenReview);
-            parameters.Add("@anoniem", anonymous);
+            parameters.Add("@anoniem", anonymousValue);
             parameters.Add("@datum", DateTime.Now);
             parameters.Add("@status", 0);
             parameters.Add("@bevestigdDoor", 0);

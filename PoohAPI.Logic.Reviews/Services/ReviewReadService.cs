@@ -73,12 +73,9 @@ namespace PoohAPI.Logic.Reviews.Services
 
             var dbReviews = _reviewRepository.GetListReviews(query, parameters);
 
-            int count = 0;
             foreach (var item in dbReviews)
             {
-                count++;
-                if (count > 4)
-                    return _mapper.Map<IEnumerable<ReviewPublic>>(dbReviews);
+                 return _mapper.Map<IEnumerable<ReviewPublic>>(dbReviews);
             }
 
             return null;

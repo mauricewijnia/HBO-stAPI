@@ -12,7 +12,7 @@ namespace PoohAPI.Logic.Common.Models.BaseModels
         public Location Location { get; set; }
         public string LogoPath { get; set; }
         public double? AverageReviewStars { get; set; }
-        public int? AmountReviews { get; set; }
+        public double? AmountReviews { get; set; }
         public string Majors { get; set; }
     }
 }

@@ -44,7 +44,7 @@ namespace PoohAPI.Logic.Companies.Services
         {
             string query = @"SELECT b.*, l.land_naam, GROUP_CONCAT(DISTINCT o.opl_naam) as opleidingen, 
                     IF(r.review_sterren IS NULL, 0,
-                            CASE WHEN COUNT(r.review_sterren) > 4
+                            CASE WHEN COUNT(r.review_sterren) > 0
                             THEN AVG(r.review_sterren)
                             ELSE 0 END
                        ) as average_reviews,
@@ -136,7 +136,7 @@ namespace PoohAPI.Logic.Companies.Services
                     b.bedrijf_lengtegraad, GROUP_CONCAT(DISTINCT o.opl_naam) as opleidingen");
             this.queryBuilder.AddSelect(@" 
                     IF(r.review_sterren IS NULL, 0,
-                            CASE WHEN COUNT(r.review_sterren) > 4
+                            CASE WHEN COUNT(r.review_sterren) > 0
                             THEN AVG(r.review_sterren)
                             ELSE 0 END
                        ) as average_reviews");

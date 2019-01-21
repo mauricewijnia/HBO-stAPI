@@ -40,16 +40,42 @@ namespace PoohAPI.Logic.Reviews.Services
 
             return this._mapper.Map<Review>(dbReview);            
         }
+
+        public ReviewPublic GetDetailedReviewById(int id)
+        {
+            Dictionary<string, object> parameters = new Dictionary<string, object>();
+
+            parameters.Add("@id", id);
+
+            string query = @"SELECT review_id, review_bedrijf_id, review_sterren, review_geschreven, 
+                IF(u.user_name IS NULL, 'Anoniem',
+                        CASE WHEN r.review_anoniem = 0
+                        THEN u.user_name 
+                        ELSE 'Anoniem' END 
+                    ) AS review_student_name, 
+                CASE WHEN r.review_anoniem = 0 
+                THEN r.review_datum 
+                ELSE NULL END AS review_datum 
+            FROM reg_reviews r 
+            LEFT JOIN reg_users u ON r.review_student_id = u.user_id 
+            WHERE review_id = @id";
+
+            var dbReview = this._reviewRepository.GetReview(query, parameters);
+
+            return this._mapper.Map<ReviewPublic>(dbReview);
+        }
         
-        public IEnumerable<int> GetListReviewIdsForUser(int userId)
+        public IEnumerable<ReviewPublic> GetListReviewIdsForUser(int userId)
         {
             Dictionary<string, object> parameters = new Dictionary<string, object>();
 
             parameters.Add("@id", userId);
 
-            string query = "SELECT review_id FROM reg_reviews WHERE review_student_id = @id";
+            string query = "SELECT r.*, u.user_name AS review_student_name FROM reg_reviews r LEFT JOIN reg_users u ON r.review_student_id = u.user_id WHERE review_student_id = @id";
 
-            return this._mapper.Map<IEnumerable<int>>(_reviewRepository.GetListReviewIds(query, parameters));
+            var dbReviews = _reviewRepository.GetListReviews(query, parameters);
+
+            return _mapper.Map<IEnumerable<ReviewPublic>>(dbReviews);
         }
 
         public IEnumerable<ReviewPublic> GetListReviewsForCompany(int companyId)
@@ -60,7 +86,7 @@ namespace PoohAPI.Logic.Reviews.Services
 
             string query = @"SELECT review_id, review_bedrijf_id, review_sterren, review_geschreven, 
                 IF(u.user_name IS NULL, 'Anoniem',
-                        CASE WHEN r.review_anoniem = 1 
+                        CASE WHEN r.review_anoniem = 0
                         THEN u.user_name 
                         ELSE 'Anoniem' END 
                     ) AS review_student_name, 

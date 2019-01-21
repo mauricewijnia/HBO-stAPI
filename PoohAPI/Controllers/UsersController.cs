@@ -29,8 +29,9 @@ namespace PoohAPI.Controllers
         private readonly IVacancyCommandService vacancyCommandService;
         private readonly ITokenHelper tokenHelper;
         private readonly IOptionReadService optionReadService;
+        private readonly IReviewReadService reviewReadService;
 
-        public UsersController(IUserReadService userReadService, IUserCommandService userCommandService, IVacancyCommandService vacancyCommandService, IVacancyReadService vacancyReadService, ITokenHelper tokenHelper, IOptionReadService optionReadService)
+        public UsersController(IUserReadService userReadService, IUserCommandService userCommandService, IVacancyCommandService vacancyCommandService, IVacancyReadService vacancyReadService, ITokenHelper tokenHelper, IOptionReadService optionReadService, IReviewReadService reviewReadService)
         {
             this.userReadService = userReadService;
             this.userCommandService = userCommandService;
@@ -38,6 +39,7 @@ namespace PoohAPI.Controllers
             this.vacancyCommandService = vacancyCommandService;
             this.tokenHelper = tokenHelper;
             this.optionReadService = optionReadService;
+            this.reviewReadService = reviewReadService;
         }
 
         /// <summary>
@@ -591,6 +593,14 @@ namespace PoohAPI.Controllers
         [ProducesResponseType(401)]
         public IActionResult GetReviews()
         {
+
+            IEnumerable<ReviewPublic> reviews = reviewReadService.GetListReviewIdsForUser(CustomAuthorizationHelper.GetCurrentUserId(User));
+
+            if (reviews != null)
+            {
+                return Ok(reviews);
+            }
+
             return Ok(new List<Review>());
         }
 

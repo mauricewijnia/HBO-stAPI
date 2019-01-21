@@ -31,7 +31,7 @@ namespace PoohAPI.Logic.Vacancies.Services
             this.locationHelper = new LocationHelper();
         }
 
-        public IEnumerable<Vacancy> GetListVacancies(int maxcount = 5, int offset = 0, string additionallocationsearchterms = null, int? educationid = null, int? educationalattainmentid = null, IntershipType? internshiptype = null, int? languageid = null, string cityname = null, string countryname = null, int? locationrange = null, int? timesSeen = null, string title = null)
+        public IEnumerable<Vacancy> GetListVacancies(int maxcount = 5, int offset = 0, string additionallocationsearchterms = null, int? educationid = null, int? educationalattainmentid = null, IntershipType? internshiptype = null, int? languageid = null, string cityname = null, string countryname = null, int? locationrange = null, int? timesSeen = null, string title = null, int? companyId = null)
         {
             Dictionary<string, object> parameters = new Dictionary<string, object>();
 
@@ -54,6 +54,8 @@ namespace PoohAPI.Logic.Vacancies.Services
             this.AddTimesSeenFilter(parameters, timesSeen);
 
             this.AddTitleFilter(parameters, title);
+
+            this.AddCompanyFilter(parameters, companyId);
 
             //building the query
             string query = this.queryBuilder.BuildQuery();
@@ -226,6 +228,15 @@ namespace PoohAPI.Logic.Vacancies.Services
             {
                 this.queryBuilder.AddWhere("v.vacature_keer_bekeken >= @timesSeen");
                 parameters.Add("@timesSeen", timesSeen);
+            }
+        }
+
+        private void AddCompanyFilter(Dictionary<string, object> parameters, int? companyId = null)
+        {
+            if(companyId != null)
+            {
+                this.queryBuilder.AddWhere("v.vacature_bedrijf_id = @companyId");
+                parameters.Add("@companyId", companyId);
             }
         }
     }

@@ -47,7 +47,12 @@ namespace PoohAPI.Logic.Companies.Services
                             CASE WHEN COUNT(r.review_sterren) > 4
                             THEN AVG(r.review_sterren)
                             ELSE 0 END
-                       ) as average_reviews
+                       ) as average_reviews,
+                    IF(r.review_sterren IS NULL, 0,
+                            CASE WHEN COUNT(r.review_sterren) > 0
+                            THEN COUNT(r.review_sterren)
+                            ELSE 0 END
+                       ) as amount_reviews
                 FROM reg_bedrijven b
                 LEFT JOIN reg_landen l ON b.bedrijf_vestiging_land = l.land_id
                 LEFT JOIN reg_reviews r ON b.bedrijf_id = r.review_bedrijf_id
@@ -135,6 +140,12 @@ namespace PoohAPI.Logic.Companies.Services
                             THEN AVG(r.review_sterren)
                             ELSE 0 END
                        ) as average_reviews");
+            this.queryBuilder.AddSelect(@" 
+                    IF(r.review_sterren IS NULL, 0,
+                            CASE WHEN COUNT(r.review_sterren) > 0
+                            THEN COUNT(r.review_sterren)
+                            ELSE 0 END
+                       ) as amount_reviews");
             this.queryBuilder.SetFrom("reg_bedrijven b");
             this.queryBuilder.AddJoinLine("LEFT JOIN reg_landen l ON b.bedrijf_vestiging_land = l.land_id");
             this.queryBuilder.AddJoinLine("LEFT JOIN reg_reviews r ON b.bedrijf_id = r.review_bedrijf_id");
